@@ -37,7 +37,7 @@ function App() {
             <Route exact path="/">
               <Home />
             </Route>
-            <PrivateRoute path="/register">
+            <PrivateRoute path="/register/:id">
               <Register />
             </PrivateRoute>
             <Route path="/login">

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
 import { userContext } from "../App";
 
@@ -19,8 +19,8 @@ const Register = () => {
   const [date, setDate] = useState(today);
 
   const { user } = useContext(userContext);
-  const history = useHistory();
-  const eventName = history.location.state.event;
+  const { id } = useParams();
+  const eventName = id;
 
   return (
     <>

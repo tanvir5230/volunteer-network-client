@@ -6,6 +6,7 @@ import { userContext } from "../App";
 const Login = ({ firebase }) => {
   let { setUser } = useContext(userContext);
   const history = useHistory();
+  const id = history.location.state.from.pathname.split("/")[2];
   const provider = new firebase.auth.GoogleAuthProvider();
   const handleSignIn = () => {
     firebase
@@ -16,7 +17,7 @@ const Login = ({ firebase }) => {
         if (history.location.state === "nav") {
           history.push("/");
         } else {
-          history.push("/register");
+          history.push("/register/" + id);
         }
       })
       .catch(function (error) {});
