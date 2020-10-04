@@ -1,25 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { createContext, useEffect, useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import NavigationBar from "./components/NavigationBar";
+import PrivateRoute from "./components/PrivateRoute";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import Home from "./components/Home";
+import { firebaseConfig } from "./firebaseConfig";
+
+import * as firebase from "firebase/app";
+import "firebase/auth";
+
+firebase.initializeApp(firebaseConfig);
+
+export const userContext = createContext();
 
 function App() {
+  const [user, setUser] = useState(firebase.auth().currentUser);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+  }, [user]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <userContext.Provider value={{ user, setUser }}>
+        <BrowserRouter>
+          <NavigationBar firebase={firebase} />
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <PrivateRoute path="/register">
+              <Register />
+            </PrivateRoute>
+            <Route path="/login">
+              <Login firebase={firebase} />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      </userContext.Provider>
+    </>
   );
 }
 
