@@ -6,7 +6,6 @@ import logo from "../resources/logos/logo.png";
 
 const NavigationBar = ({ firebase }) => {
   const { user, setUser } = useContext(userContext);
-  console.log(user, "login");
 
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);

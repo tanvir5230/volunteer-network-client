@@ -4,9 +4,12 @@ import { Col, Container, Row } from "reactstrap";
 import { userContext } from "../App";
 
 const Login = ({ firebase }) => {
-  let { setUser } = useContext(userContext);
+  let { user, setUser } = useContext(userContext);
   const history = useHistory();
   const id = history.location.state.from.pathname.split("/")[2];
+  if (user) {
+    history.replace("/register/" + id);
+  }
   const provider = new firebase.auth.GoogleAuthProvider();
   const handleSignIn = () => {
     firebase

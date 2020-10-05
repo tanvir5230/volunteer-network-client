@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
 import { userContext } from "../App";
 
@@ -16,11 +16,53 @@ if (mm < 10) {
 today = yyyy + "-" + mm + "-" + dd;
 
 const Register = () => {
-  const [date, setDate] = useState(today);
-
   const { user } = useContext(userContext);
   const { id } = useParams();
+  const history = useHistory();
   const eventName = id;
+  console.log(history, "reg");
+
+  const [date, setDate] = useState(today);
+  const [des, setDes] = useState("");
+  const [regData, setRegData] = useState({
+    name: user.displayName,
+    email: user.email,
+    event: eventName,
+    date: date,
+    description: des,
+  });
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    if (name === "date") {
+      setDate(value);
+    } else {
+      setDes(value);
+    }
+    const newData = { ...regData, [name]: value };
+    setRegData(newData);
+  };
+
+  const handleRegister = async () => {
+    const url = "http://localhost:5000";
+    await fetch(url + "/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(regData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.ok) {
+          alert("successfull");
+        }
+      })
+      .catch((err) => {
+        alert("not possible to add. try again.");
+      });
+    history.push("/registeredEvents?email=" + user.email);
+  };
 
   return (
     <>
@@ -60,6 +102,7 @@ const Register = () => {
               name="description"
               className="form-control font-weight-bold"
               placeholder="description"
+              onBlur={(e) => handleBlur(e)}
             />
             <input
               type="date"
@@ -69,11 +112,13 @@ const Register = () => {
               min={today}
               value={date}
               onInput={(e) => setDate(e.target.value)}
+              onBlur={(e) => handleBlur(e)}
             />
             <input
               type="submit"
               className="btn btn-block btn-primary reg-btn"
               value="Register"
+              onClick={handleRegister}
             />
           </Col>
         </Row>
