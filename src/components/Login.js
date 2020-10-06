@@ -6,11 +6,16 @@ import { userContext } from "../App";
 const Login = ({ firebase }) => {
   let { user, setUser } = useContext(userContext);
   const history = useHistory();
-  const id = history.location.state.from.pathname.split("/")[2];
-  if (user) {
-    history.replace("/register/" + id);
+
+  if (history.location.state !== "nav") {
+    var id = history.location.state.from.pathname.split("/")[2];
   }
+  if (user) {
+    history.push("/admin");
+  }
+
   const provider = new firebase.auth.GoogleAuthProvider();
+
   const handleSignIn = () => {
     firebase
       .auth()
@@ -20,11 +25,15 @@ const Login = ({ firebase }) => {
         if (history.location.state === "nav") {
           history.push("/");
         } else {
-          history.push("/register/" + id);
+          if (history.location.state.from.state === "admin") {
+            history.push("/admin");
+          } else {
+            history.push("/register/" + id);
+          }
         }
-      })
-      .catch(function (error) {});
+      });
   };
+
   return (
     <Container>
       <Row

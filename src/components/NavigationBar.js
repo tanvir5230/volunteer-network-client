@@ -34,7 +34,10 @@ const NavigationBar = ({ firebase }) => {
             <Link to="/login" className="btn btn-primary ml-auto mr-1">
               R
             </Link>
-            <Link to="/admin" className="btn btn-dark mr-1">
+            <Link
+              to={{ pathname: "/admin", state: "admin" }}
+              className="btn btn-dark mr-1"
+            >
               A
             </Link>
             <NavbarToggler onClick={toggle} className="ml-auto border-0 " />
@@ -66,7 +69,10 @@ const NavigationBar = ({ firebase }) => {
             >
               Login
             </Link>
-            <Link to="/admin" className="btn btn-dark">
+            <Link
+              to={{ pathname: "/admin", state: "admin" }}
+              className="btn btn-dark"
+            >
               Admin
             </Link>
           </div>
@@ -80,6 +86,12 @@ const NavigationBar = ({ firebase }) => {
             >
               Signout
             </button>
+            <Link
+              to={{ pathname: "/admin", state: "admin" }}
+              className="btn btn-dark"
+            >
+              Admin
+            </Link>
           </div>
         )}
       </Navbar>

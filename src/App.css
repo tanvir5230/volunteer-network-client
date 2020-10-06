@@ -16,3 +16,7 @@
   margin-top: 15px;
   margin-bottom: 15px;
 }
+.btn:focus {
+  border: none;
+  box-shadow: none;
+}

@@ -12,6 +12,8 @@ import { firebaseConfig } from "./firebaseConfig";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import RegisteredEvents from "./components/RegisteredEvents";
+import PrivateRouteAdmin from "./components/PrivateRouteAdmin";
+import Admin from "./components/Admin";
 
 firebase.initializeApp(firebaseConfig);
 
@@ -41,6 +43,9 @@ function App() {
             <PrivateRoute path="/register/:id">
               <Register />
             </PrivateRoute>
+            <PrivateRouteAdmin path="/admin">
+              <Admin />
+            </PrivateRouteAdmin>
             <Route path="/login">
               <Login firebase={firebase} />
             </Route>

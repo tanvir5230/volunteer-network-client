@@ -8,17 +8,22 @@ const Home = () => {
   const bgs = ["#FFBD3E", "#FF7044", "#3F90FC", "#421FCF"];
 
   useEffect(() => {
-    const url = "http://localhost:5000";
-    fetch(url + "/")
+    const url = "https://volunteer-network-server-t.herokuapp.com";
+    fetch(`${url}/`)
       .then((res) => res.json())
-      .then((data) => setEvents(data));
+      .then((data) => {
+        setEvents(data);
+      })
+      .catch((err) => {
+        alert("try again");
+      });
   }, []);
   return (
     <Container style={{ backgroundColor: "#f8f9fa" }}>
       <Search />
       <Row className="my-5 justify-content-center">
         {events === null && <p>loading...</p>}
-        {events &&
+        {events && events.length > 0 ? (
           events.map((event, ind) => {
             const i = ind + 1;
             let bg = "blue";
@@ -33,14 +38,16 @@ const Home = () => {
             }
 
             return (
-              <Col xs={10} md={4} lg={3} key={event.name} className="mt-3 p-4">
+              <Col xs={10} md={4} lg={3} key={event._id} className="mt-3 p-4">
                 <Link
                   to={{
                     pathname: `/register/${event.name}`,
                     state: {
                       event: `${event.name}`,
-                      image: `${event.image}`,
                     },
+                  }}
+                  onClick={() => {
+                    sessionStorage.setItem("image", event.image);
                   }}
                 >
                   <div className="position-relative">
@@ -55,7 +62,12 @@ const Home = () => {
                 </Link>
               </Col>
             );
-          })}
+          })
+        ) : (
+          <p className="font-weight-bolder text-center text-capitalize">
+            no event available.
+          </p>
+        )}
       </Row>
     </Container>
   );

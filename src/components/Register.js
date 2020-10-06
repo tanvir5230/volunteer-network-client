@@ -20,7 +20,6 @@ const Register = () => {
   const { id } = useParams();
   const history = useHistory();
   const eventName = id;
-  console.log(history, "reg");
 
   const [date, setDate] = useState(today);
   const [des, setDes] = useState("");
@@ -30,6 +29,7 @@ const Register = () => {
     event: eventName,
     date: date,
     description: des,
+    image: sessionStorage.getItem("image"),
   });
 
   const handleBlur = (e) => {
@@ -44,7 +44,7 @@ const Register = () => {
   };
 
   const handleRegister = async () => {
-    const url = "http://localhost:5000";
+    const url = "https://volunteer-network-server-t.herokuapp.com";
     await fetch(url + "/register", {
       method: "POST",
       headers: {
@@ -111,7 +111,7 @@ const Register = () => {
               className="form-control font-weight-bold"
               min={today}
               value={date}
-              onInput={(e) => setDate(e.target.value)}
+              onChange={(e) => setDate(e.target.value)}
               onBlur={(e) => handleBlur(e)}
             />
             <input
