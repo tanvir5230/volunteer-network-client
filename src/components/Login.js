@@ -25,12 +25,25 @@ const Login = ({ firebase }) => {
 
   const provider = new firebase.auth.GoogleAuthProvider();
 
+  const setAuthToken = () => {
+    firebase
+      .auth()
+      .currentUser.getIdToken(true)
+      .then(function (idToken) {
+        sessionStorage.setItem("token", idToken);
+      })
+      .catch(function (error) {
+        alert("couldn't connect.");
+      });
+  };
+
   const handleSignIn = () => {
     firebase
       .auth()
       .signInWithPopup(provider)
       .then(function (result) {
         setUser(result.user);
+        setAuthToken();
         if (history.location.state) {
           if (history.location.state.place === "admin") {
             history.push("/admin");

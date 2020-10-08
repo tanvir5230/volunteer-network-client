@@ -63,7 +63,7 @@ const SideNav = ({ url }) => {
       <NavLink
         activeStyle={{ color: "blueviolet" }}
         to={`${url}/volunteer-list`}
-        className="text-left font-weight-bold btn btn-block border-0"
+        className="text-left font-weight-bold btn p-0 btn-block border-0"
       >
         <span>
           <img
@@ -76,13 +76,13 @@ const SideNav = ({ url }) => {
       </NavLink>
       <NavLink
         to={`${url}/create-event`}
-        className="text-left font-weight-bold btn btn-block border-0"
+        className="text-left font-weight-bold btn p-0 btn-block border-0"
         activeStyle={{ color: "blueviolet" }}
       >
         <span>
           <img
             src={require("../resources/logos/plus 1.png")}
-            className="img-fluid mr-2"
+            className="img-fluid mr-md-2"
             width="35"
             alt=""
           />

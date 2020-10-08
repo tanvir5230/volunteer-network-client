@@ -13,7 +13,11 @@ const RegisteredEvents = () => {
 
   useEffect(() => {
     const url = "https://volunteer-network-server-t.herokuapp.com";
-    fetch(url + "/registeredEvents?" + query)
+    fetch(url + "/registeredEvents?" + query, {
+      headers: {
+        authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         setEvents(data);
