@@ -187,7 +187,7 @@ const VolunteerList = ({ volList }) => {
 
   return (
     <div className="bg-white">
-      <Table>
+      <Table responsive>
         <thead className="mt-2">
           <tr style={{ backgroundColor: "#f8f9fa" }}>
             <th>Name</th>

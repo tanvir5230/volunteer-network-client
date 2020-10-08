@@ -16,35 +16,37 @@ const NavigationBar = ({ firebase }) => {
       .signOut()
       .then(function () {
         setUser(null);
-      })
-      .catch(function (error) {
-        // An error happened.
       });
   };
 
   return (
-    <div className="container-md">
-      <Navbar color="light" light expand="md">
+    <div className="container-lg">
+      <Navbar color="light" light expand="lg">
         <Link to="/">
           <img src={logo} width="150" height="40" alt="" />
         </Link>
 
+        {/* smaller view when user not logged in */}
         {user === null && (
-          <div className="d-md-none">
-            <Link
-              to={{ pathname: "/login" }}
-              className="btn btn-primary ml-auto mr-1"
-            >
-              L
+          <div className="d-lg-none ml-auto">
+            <Link to={{ pathname: "/login" }} className="btn p-1 mr-1">
+              <img
+                src={require("../resources/logos/login.png")}
+                alt=""
+                width="30"
+              />
             </Link>
-            <Link to={{ pathname: "/admin" }} className="btn btn-dark mr-1">
-              A
+            <Link to={{ pathname: "/admin" }} className="btn p-0 btn-dark mr-1">
+              <img
+                src={require("../resources/logos/admin.png")}
+                alt=""
+                width="30"
+              />
             </Link>
-            <NavbarToggler onClick={toggle} className="ml-auto border-0 " />
           </div>
         )}
-
-        <Collapse isOpen={isOpen} navbar>
+        <NavbarToggler onClick={toggle} className="border-0 " />
+        <Collapse isOpen={isOpen} navbar className="text-right">
           <Nav className="ml-auto" navbar>
             <NavItem>
               <NavLink to="/">Home</NavLink>
@@ -52,17 +54,36 @@ const NavigationBar = ({ firebase }) => {
             <NavItem>
               <Link to="/dontaion">Donation</Link>
             </NavItem>
-            <NavItem>
-              <Link to="/events">Events</Link>
-            </NavItem>
+            {user && (
+              <NavItem>
+                <Link to={`/registeredEvents?email=${user.email}`}>Events</Link>
+              </NavItem>
+            )}
             <NavItem>
               <Link to="/blog">Blog</Link>
             </NavItem>
           </Nav>
+          {user && (
+            <div className="d-flex justify-content-end align-items-center">
+              <span className="font-weight-bold">
+                {user.displayName.slice(0, 6)}
+              </span>
+              <button
+                className="btn btn-danger rounded-pill ml-2"
+                onClick={handleSignout}
+              >
+                Signout
+              </button>
+              <Link to={{ pathname: "/admin" }} className="btn btn-dark">
+                Admin
+              </Link>
+            </div>
+          )}
         </Collapse>
 
+        {/* larger view when user not logged in */}
         {user === null && (
-          <div className="d-none d-md-block">
+          <div className="d-none d-lg-block">
             <Link
               to={{ pathname: "/login" }}
               className="btn btn-primary ml-auto mr-3"
@@ -74,20 +95,7 @@ const NavigationBar = ({ firebase }) => {
             </Link>
           </div>
         )}
-        {user && (
-          <div className="d-flex align-items-center">
-            <span className="font-weight-bold">{user.displayName}</span>
-            <button
-              className="btn btn-danger rounded-pill ml-2"
-              onClick={handleSignout}
-            >
-              Signout
-            </button>
-            <Link to={{ pathname: "/admin" }} className="btn btn-dark">
-              Admin
-            </Link>
-          </div>
-        )}
+        {/* when user logged in */}
       </Navbar>
     </div>
   );

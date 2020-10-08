@@ -18,7 +18,7 @@ const RegisteredEvents = () => {
       .then((data) => {
         setEvents(data);
       });
-  }, [query]);
+  }, []);
 
   const handleCancel = (e, id) => {
     e.persist();
@@ -32,7 +32,7 @@ const RegisteredEvents = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data) {
-          e.target.parentNode.remove();
+          e.target.parentNode.parentNode.remove();
         }
       });
   };
@@ -57,7 +57,7 @@ const RegisteredEvents = () => {
                     height="110px"
                     className="float-left mr-3"
                   />
-                  <div className="">
+                  <div>
                     <h5>{event.event}</h5>
                     <p>{event.date}</p>
                   </div>

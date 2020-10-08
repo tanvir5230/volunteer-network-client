@@ -14,6 +14,7 @@ import "firebase/auth";
 import RegisteredEvents from "./components/RegisteredEvents";
 import PrivateRouteAdmin from "./components/PrivateRouteAdmin";
 import Admin from "./components/Admin";
+import PrivateEvents from "./components/PrivateEvents";
 
 firebase.initializeApp(firebaseConfig);
 
@@ -49,9 +50,9 @@ function App() {
             <Route path="/login">
               <Login firebase={firebase} />
             </Route>
-            <Route path="/registeredEvents">
+            <PrivateEvents path="/registeredEvents">
               <RegisteredEvents />
-            </Route>
+            </PrivateEvents>
           </Switch>
         </BrowserRouter>
       </userContext.Provider>

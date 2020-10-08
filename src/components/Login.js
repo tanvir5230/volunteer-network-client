@@ -8,6 +8,21 @@ const Login = ({ firebase }) => {
 
   const history = useHistory();
 
+  if (user) {
+    if (history.location.state) {
+      if (history.location.state.place === "admin") {
+        history.push("/admin");
+      } else if (history.location.state.place === "event") {
+        let id = history.location.state.from.pathname.split("/")[2];
+        history.push("/register/" + id);
+      } else {
+        history.push("/registeredEvents?email=" + user.email);
+      }
+    } else {
+      history.push("/");
+    }
+  }
+
   const provider = new firebase.auth.GoogleAuthProvider();
 
   const handleSignIn = () => {
