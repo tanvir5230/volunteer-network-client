@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { userContext } from "../App";
 
-function PrivateRouteAdmin({ children, ...rest }) {
+function PrivateRouteEvent({ children, ...rest }) {
   const { user } = useContext(userContext);
 
   return (
@@ -15,7 +15,7 @@ function PrivateRouteAdmin({ children, ...rest }) {
           <Redirect
             to={{
               pathname: "/login",
-              state: { from: location, place: "admin" },
+              state: { from: location, place: "event" },
             }}
           />
         )
@@ -24,4 +24,4 @@ function PrivateRouteAdmin({ children, ...rest }) {
   );
 }
 
-export default PrivateRouteAdmin;
+export default PrivateRouteEvent;

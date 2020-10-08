@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
+import Loader from "./Loader";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -16,8 +17,7 @@ const RegisteredEvents = () => {
       .then((res) => res.json())
       .then((data) => {
         setEvents(data);
-      })
-      .catch((err) => alert(err));
+      });
   }, [query]);
 
   const handleCancel = (e, id) => {
@@ -32,7 +32,7 @@ const RegisteredEvents = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data) {
-          e.target.parentNode.parentNode.remove();
+          e.target.parentNode.remove();
         }
       });
   };
@@ -42,7 +42,7 @@ const RegisteredEvents = () => {
       <Row className="justify-content-center justify-content-md-start mt-5">
         {events === null && (
           <Col xs={10} md={6}>
-            <div className="text-center">loading...</div>
+            <Loader />
           </Col>
         )}
         {events &&
@@ -63,7 +63,7 @@ const RegisteredEvents = () => {
                   </div>
                   <button
                     className="btn btn-outline-primary ml-auto"
-                    onClick={(e, id) => {
+                    onClick={(e) => {
                       handleCancel(e, event._id);
                     }}
                   >

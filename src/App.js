@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar";
-import PrivateRoute from "./components/PrivateRoute";
+import PrivateRouteEvent from "./components/PrivateRouteEvent";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Home from "./components/Home";
@@ -40,9 +40,9 @@ function App() {
             <Route exact path="/">
               <Home />
             </Route>
-            <PrivateRoute path="/register/:id">
+            <PrivateRouteEvent path="/register/:id">
               <Register />
-            </PrivateRoute>
+            </PrivateRouteEvent>
             <PrivateRouteAdmin path="/admin">
               <Admin />
             </PrivateRouteAdmin>

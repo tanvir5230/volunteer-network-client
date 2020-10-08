@@ -5,14 +5,8 @@ import { userContext } from "../App";
 
 const Login = ({ firebase }) => {
   let { user, setUser } = useContext(userContext);
-  const history = useHistory();
 
-  if (history.location.state !== "nav") {
-    var id = history.location.state.from.pathname.split("/")[2];
-  }
-  if (user) {
-    history.push("/admin");
-  }
+  const history = useHistory();
 
   const provider = new firebase.auth.GoogleAuthProvider();
 
@@ -22,14 +16,15 @@ const Login = ({ firebase }) => {
       .signInWithPopup(provider)
       .then(function (result) {
         setUser(result.user);
-        if (history.location.state === "nav") {
-          history.push("/");
-        } else {
-          if (history.location.state.from.state === "admin") {
+        if (history.location.state) {
+          if (history.location.state.place === "admin") {
             history.push("/admin");
           } else {
+            let id = history.location.state.from.pathname.split("/")[2];
             history.push("/register/" + id);
           }
+        } else {
+          history.push("/");
         }
       });
   };

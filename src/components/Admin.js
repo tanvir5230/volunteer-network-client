@@ -170,7 +170,7 @@ const VolunteerList = ({ volList }) => {
   const handleDelete = (e, id) => {
     e.persist();
     const url = "https://volunteer-network-server-t.herokuapp.com";
-    fetch(`${url}/${id}`, {
+    fetch(`${url}/deleteVol/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

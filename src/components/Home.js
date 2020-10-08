@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
+import Loader from "./Loader";
 
 const Home = () => {
   const [events, setEvents] = useState(null);
@@ -22,8 +23,8 @@ const Home = () => {
     <Container style={{ backgroundColor: "#f8f9fa" }}>
       <Search />
       <Row className="my-5 justify-content-center">
-        {events === null && <p>loading...</p>}
-        {events && events.length > 0 ? (
+        {events === null && <Loader />}
+        {events &&
           events.map((event, ind) => {
             const i = ind + 1;
             let bg = "blue";
@@ -42,9 +43,6 @@ const Home = () => {
                 <Link
                   to={{
                     pathname: `/register/${event.name}`,
-                    state: {
-                      event: `${event.name}`,
-                    },
                   }}
                   onClick={() => {
                     sessionStorage.setItem("image", event.image);
@@ -52,22 +50,17 @@ const Home = () => {
                 >
                   <div className="position-relative">
                     <img src={event.image} alt="" className="img-fluid" />
-                    <h4
+                    <h6
                       className="position-absolute w-100 text-center text-capitalize text-white py-3 rounded"
                       style={{ bottom: "-9px", backgroundColor: bg }}
                     >
                       {event.name}
-                    </h4>
+                    </h6>
                   </div>
                 </Link>
               </Col>
             );
-          })
-        ) : (
-          <p className="font-weight-bolder text-center text-capitalize">
-            no event available.
-          </p>
-        )}
+          })}
       </Row>
     </Container>
   );
