@@ -116,7 +116,6 @@ const CreateEvent = () => {
     data.append("name", name);
     data.append("file", file);
 
-    console.log(data, name, date, file);
     Axios.post(
       "https://volunteer-network-server-t.herokuapp.com/addEvent",
       data
