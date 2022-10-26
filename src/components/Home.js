@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
+import { onlineServer } from "../serverName/serverName";
 import Loader from "./Loader";
 
 const Home = () => {
@@ -9,7 +10,7 @@ const Home = () => {
   const bgs = ["#FFBD3E", "#FF7044", "#3F90FC", "#421FCF"];
 
   useEffect(() => {
-    const url = "https://volunteer-network-server-t.herokuapp.com";
+    const url = onlineServer;
     fetch(`${url}/`)
       .then((res) => res.json())
       .then((data) => {

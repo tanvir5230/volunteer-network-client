@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
 import { userContext } from "../App";
+import { onlineServer } from "../serverName/serverName";
 
 let today = new Date();
 let dd = today.getDate();
@@ -44,7 +45,7 @@ const Register = () => {
   };
 
   const handleRegister = async () => {
-    const url = "https://volunteer-network-server-t.herokuapp.com";
+    const url = onlineServer;
     await fetch(url + "/register", {
       method: "POST",
       headers: {

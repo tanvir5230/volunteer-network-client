@@ -12,7 +12,7 @@ const RegisteredEvents = () => {
   let query = useQuery();
 
   useEffect(() => {
-    const url = "https://volunteer-network-server-t.herokuapp.com";
+    const url = "https://volunteer-network-server-t1.herokuapp.com";
     fetch(url + "/registeredEvents?" + query, {
       headers: {
         authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -26,7 +26,7 @@ const RegisteredEvents = () => {
 
   const handleCancel = (e, id) => {
     e.persist();
-    const url = "https://volunteer-network-server-t.herokuapp.com";
+    const url = "https://volunteer-network-server-t1.herokuapp.com";
     fetch(url + "/event/" + id, {
       method: "DELETE",
       headers: {

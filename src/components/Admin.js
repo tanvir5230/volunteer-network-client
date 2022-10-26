@@ -8,6 +8,7 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import { Col, Container, Row, Table } from "reactstrap";
+import { onlineServer } from "../serverName/serverName";
 
 const Admin = () => {
   const { url, path } = useRouteMatch();
@@ -15,7 +16,7 @@ const Admin = () => {
   const [volList, setVolList] = useState(null);
 
   useEffect(() => {
-    const url = "https://volunteer-network-server-t.herokuapp.com";
+    const url = onlineServer;
     fetch(url + "/admin/volunteer-list")
       .then((res) => res.json())
       .then((data) => setVolList(data))
@@ -117,7 +118,7 @@ const CreateEvent = () => {
     data.append("file", file);
 
     Axios.post(
-      "https://volunteer-network-server-t.herokuapp.com/addEvent",
+      `${onlineServer}/addEvent`,
       data
     )
       .then((res) => console.log(res))
@@ -127,7 +128,7 @@ const CreateEvent = () => {
     <form
       method="post"
       encType="multipart/form-data"
-      action="https://volunteer-network-server-t.herokuapp.com/addEvent"
+      action={`${onlineServer}/addEvent`}
       style={{ width: "400px" }}
     >
       <input
@@ -156,7 +157,7 @@ const CreateEvent = () => {
         required
       />
       <button
-        // onClick={(e) => handleSubmit(e)}
+        onClick={(e) => handleSubmit(e)}
         className="btn btn-success rounded-pill btn-block mt-3"
       >
         submit
@@ -168,7 +169,7 @@ const CreateEvent = () => {
 const VolunteerList = ({ volList }) => {
   const handleDelete = (e, id) => {
     e.persist();
-    const url = "https://volunteer-network-server-t.herokuapp.com";
+    const url = onlineServer;
     fetch(`${url}/deleteVol/${id}`, {
       method: "DELETE",
       headers: {
